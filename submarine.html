@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+    <html>
+        <head>
+            <meta charset = "utf-8"/>
+            <title>submarine</title>
+            <style>
+                body{
+                    background-color: #000000;
+                    margin: 0px;
+                }
+                canvas{
+                    background-color: #0099FF;
+                }
+            </style>
+        </head>
+        <body>
+            <canvas id ="canvas" width = "800" height = "600">
+            </canvas>
+        <script type = "text/javascript">
+            //캔버스 객체
+            var canvas;
+            var ctx;
+            var canvasBuffer;
+            var bufferCtx;
+            var threadSpeed = 10;
+
+            //잠수함
+            var submarine;
+            var sx, sy, sw = 60, sh = 35;
+
+            //
+            var background;
+
+            //장애물
+            var enemy =  new Array();
+            var enemyColor = ["red", "blue", "white"];
+            var ellapse = 10;
+
+            //타이머 인스턴스
+            var loopInstance;
+
+            //게임의 상태
+            var STATE_START = false;
+            var STATE_GAMEOVER = false;
+
+            //키 상태
+            var keyPressed = [];
+
+            //경과 시간
+            var oldTime;
+            var startTime;
+            var totalTime;
+
+            window.addEventListener("load", initialize, false);
+            window.addEventListener("keydown", getKeyDown, false);
+            window.addEventListener("keyup", getKeyUp, false);
+
+            function initialize()
+            {
+                canvas = document.getElementById("canvas");
+                if(canvas==null || canvas.getContext==null) return;
+                ctx = canvas.getContext("2d");
+
+                canvasBuffer = document.createElement("canvas");
+                canvasBuffer.width = canvas.width;
+                
+                canvasBuffer.height = canvas.height;
+                bufferCtx = canvasBuffer.getContext("2d");
+
+            //게임 시작 메시지
+            startMessage();
+            //이미지 설정
+            setImage(); 
+            //반복 동작 설정
+            loopInstance = setInterval(update, threadSpeed);
+		}
+
+        function startMessage()
+		{
+		  drawText(ctx, "Enter to Start", canvas.width/2, canvas.height/2 - 60, "bold 30px arial", "#ffff00", "center", "top");
+		  drawText(ctx, "조작 : 방향키 ←↑→↓", canvas.width/2, canvas.height/2 - 20, "bold 20px arial", "#ffffff", "center", "top");
+		}
+
+        function drawText(ctx, text, x, y, font, color, align, base)
+        {
+            if (font != undefined) ctx.font = font;
+		     if (color != undefined) ctx.fillStyle = color;
+		     if (align != undefined) ctx.textAlign = align;
+		     if (base != undefined) ctx.textBaseline = base;
+		     ctx.fillText(text, x, y);
+		}
+
+        function setimage()
+        {
+            submarine = new image();
+            submarine.src = "image/jamsuham.png";
+            background = new Image();
+            background.src = "image/sea.jpg;"
+        }
+
+
+        </script>
+        </body>
+    </html>
